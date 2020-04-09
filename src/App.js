@@ -2,18 +2,44 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import QuoteCard from './components/QuoteCard';
 import QuoteForm from './components/QuoteForm';
-import quotes from './quotes';
+import axios from 'axios';
 
-function App() {
-  return (
-    <>
-      <Navbar />
-      <QuoteForm />
-      {
-        quotes.map(quote => <QuoteCard key={quote.character} {...quote} />)
-      }
-    </>
-  );
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quotes: []
+    }
+    this.getQuotes = this.getQuotes.bind(this)
+  }
+
+  getQuotes() {
+    axios.get('https://thesimpsonsquoteapi.glitch.me/quotes', {
+      params: { count: 4 }
+    }).then(
+      response => response.data
+    ).then(
+      data => this.setState({ quotes: data })
+    ).catch(
+      error => console.log(error)
+    );
+  }
+
+  render() {
+
+    return (
+      <>
+        <Navbar />
+        <QuoteForm getQuotes={this.getQuotes} />
+        {
+          this.state.quotes.map(
+            quote => <QuoteCard key={quote.character} {...quote} />
+          )
+        }
+      </>
+    );
+  }
 }
 
 export default App;

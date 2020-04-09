@@ -22,6 +22,7 @@ class QuoteForm extends Component {
 
     render() {
       let { character } = this.state;
+
       return (
         <form
           className="QuoteForm"
@@ -35,6 +36,12 @@ class QuoteForm extends Component {
             className={character.length >= maxLength && "length-maximum-reached"}
             onChange={this.handleChange}
           />
+          <button 
+            type="button" 
+            onClick={this.props.getQuotes}
+          >
+            Generate quotes
+          </button>
           {character &&
             <>
                 <p>{`You've selected ${character}`}</p>
