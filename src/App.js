@@ -16,7 +16,7 @@ class App extends React.Component {
 
   getQuotes() {
     axios.get('https://thesimpsonsquoteapi.glitch.me/quotes', {
-      params: { count: 4 }
+      params: { count: 2 }
     }).then(
       response => response.data
     ).then(
